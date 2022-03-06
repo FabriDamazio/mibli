@@ -18,7 +18,7 @@ ARG RUNNER_IMAGE="debian:bullseye-20210902-slim"
 FROM ${BUILDER_IMAGE} as builder
 
 # install build dependencies
-RUN apt-get update -y && apt-get install -y build-essential git \
+RUN apt-get update -y && apt-get install -y build-essential git nodejs npm \
     && apt-get clean && rm -f /var/lib/apt/lists/*_*
 
 # prepare build dir
@@ -42,6 +42,9 @@ RUN mkdir config
 COPY config/config.exs config/${MIX_ENV}.exs config/
 RUN mix deps.compile
 
+# Compile the release
+COPY lib lib
+
 COPY priv priv
 
 # note: if your project uses a tool like https://purgecss.com/,
@@ -50,11 +53,10 @@ COPY priv priv
 # step down so that `lib` is available.
 COPY assets assets
 
+RUN cd assets && npm install
+
 # compile assets
 RUN mix assets.deploy
-
-# Compile the release
-COPY lib lib
 
 RUN mix compile
 
