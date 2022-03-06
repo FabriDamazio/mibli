@@ -1,0 +1,10 @@
+<%= if @current_user do %>
+  <div class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50">
+    <%= @current_user.email %>
+  </div>
+  <%= link "Settings", to: Routes.user_settings_path(@conn, :edit), class: "block px-3 py-2 rounded-md text-base font-medium text-indigo-600 hover:text-gray-900 hover:bg-gray-50"  %>  
+  <%= link "Log out", to: Routes.user_session_path(@conn, :delete), method: :delete, class: "block px-3 py-2 rounded-md text-base font-medium text-indigo-600 hover:text-gray-900 hover:bg-gray-50"  %>  
+<% else %>  
+  <%= link "Registrar", to: Routes.user_registration_path(@conn, :new), class: "block px-3 py-2 rounded-md text-base font-medium text-indigo-600 hover:text-gray-900 hover:bg-gray-50" %>    
+  <%= link "Entrar", to: Routes.user_session_path(@conn, :new), class: "block px-3 py-2 rounded-md text-base font-medium text-indigo-600 hover:text-gray-900 hover:bg-gray-50"  %>  
+<% end %>
