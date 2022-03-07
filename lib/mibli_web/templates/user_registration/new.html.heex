@@ -1,26 +1,34 @@
-<h1>Register</h1>
-
-<.form let={f} for={@changeset} action={Routes.user_registration_path(@conn, :create)}>
-  <%= if @changeset.action do %>
-    <div class="alert alert-danger">
-      <p>Oops, something went wrong! Please check the errors below.</p>
-    </div>
-  <% end %>
-
-  <%= label f, :email %>
-  <%= email_input f, :email, required: true %>
-  <%= error_tag f, :email %>
-
-  <%= label f, :password %>
-  <%= password_input f, :password, required: true %>
-  <%= error_tag f, :password %>
-
-  <div>
-    <%= submit "Register" %>
+<div class="container mx-auto bg-white dark:bg-gray-800 mt-10 rounded px-4">
+  <div class="xl:w-full border-b border-gray-300 dark:border-gray-700 py-5">
+      <div class="flex w-11/12 mx-auto xl:w-full xl:mx-0 items-center">
+          <p class="text-lg text-gray-800 dark:text-gray-100 font-bold">Criar uma nova conta</p>          
+      </div>
   </div>
-</.form>
+  <div class="mx-auto pt-4">
+      <div class="container mx-auto">
+        <.form let={f} for={@changeset} action={Routes.user_registration_path(@conn, :create)} class="my-6 w-11/12 mx-auto xl:w-full xl:mx-0">          
+          <div class="xl:w-1/4 lg:w-1/2 md:w-1/2 flex flex-col mb-6">
+            <%= label f, :email, class: "pb-2 text-sm font-bold text-gray-800 dark:text-gray-100" %>
+            <%= email_input f, :email, required: true, autocomplete: "email", class: "mb-4 appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm", placeholder: "Endereço de e-mail" %>
+            <%= error_tag f, :email %>
+          </div>
+          <div class="xl:w-1/4 lg:w-1/2 md:w-1/2 flex flex-col mb-6">
+            <%= label f, :password, class: "pb-2 text-sm font-bold text-gray-800 dark:text-gray-100" %>
+            <%= password_input f, :password, required: true, class: "mb-4 appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm", placeholder: "Senha" %>
+            <%= error_tag f, :password %>
+          </div>           
+          <div class="container mx-auto w-11/12 xl:w-full">
+              <div class="w-full py-4 sm:px-0 bg-white dark:bg-gray-800 flex justify-start">                            
+                  <button role="button" aria-label="Save form" class="focus:ring-2 focus:ring-offset-2 focus:ring-indigo-700 bg-indigo-700 focus:outline-none transition duration-150 ease-in-out hover:bg-indigo-600 rounded text-white px-8 py-2 text-sm" type="submit">Criar nova conta</button>
+              </div>
+          </div>      
+          </.form>
+          <p>
+            <%= link "Já tenho uma conta", to: Routes.user_session_path(@conn, :new) %> |
+            <%= link "Esqueci minha senha", to: Routes.user_reset_password_path(@conn, :new) %>
+          </p>
+      </div>
+  </div>
+</div>
 
-<p>
-  <%= link "Log in", to: Routes.user_session_path(@conn, :new) %> |
-  <%= link "Forgot your password?", to: Routes.user_reset_password_path(@conn, :new) %>
-</p>
+
