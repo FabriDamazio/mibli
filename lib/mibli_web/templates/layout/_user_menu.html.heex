@@ -1,10 +1,10 @@
-<%= if @current_user do %>
-  <div class="font-medium text-gray-500 hover:text-gray-900 inline">
-    <%= @current_user.email %>
-  </div>
-  <%= link "Settings", to: Routes.user_settings_path(@conn, :edit), class: "font-medium text-indigo-600 hover:text-indigo-500"  %>  
-  <%= link "Log out", to: Routes.user_session_path(@conn, :delete), method: :delete, class: "font-medium text-indigo-600 hover:text-indigo-500"  %>  
-<% else %>  
-  <%= link "Registrar", to: Routes.user_registration_path(@conn, :new), class: "font-medium text-indigo-600 hover:text-indigo-500" %>    
-  <%= link "Entrar", to: Routes.user_session_path(@conn, :new), class: "font-medium text-indigo-600 hover:text-indigo-500"  %>  
-<% end %>
+<div class="hidden md:flex items-center">
+  <%= if @current_user do %>
+    <div class="hidden md:block mr-6 font-medium text-gray-500 hover:text-gray-900 inline">
+      <%= @current_user.email %>
+    </div>    
+  <% else %>  
+    <%= link "Entrar", to: Routes.user_session_path(@conn, :new), class: "hidden md:block mr-6 font-medium text-indigo-600 hover:text-indigo-500"  %>  
+    <%= link "Criar conta", to: Routes.user_registration_path(@conn, :new), class: "focus:outline-none lg:text-lg lg:font-bold focus:ring-2 focus:ring-offset-2 focus:ring-indigo-700 hidden md:block bg-transparent transition duration-150 ease-in-out hover:bg-gray-200 rounded border border-indigo-700 text-indigo-700 px-4 sm:px-8 py-1 sm:py-3 text-sm" %>    
+  <% end %>
+</div>
