@@ -1,18 +1,18 @@
-<div class="container mx-auto bg-white dark:bg-gray-800 mt-10 rounded px-4">
-  <div class="xl:w-full border-b border-gray-300 dark:border-gray-700 py-5">
+<div class="container mx-auto bg-white mt-10 rounded px-4">
+  <div class="xl:w-full border-b border-gray-300 py-5">
       <div class="flex w-11/12 mx-auto xl:w-full xl:mx-0 items-center">
-          <p class="text-lg text-gray-800 dark:text-gray-100 font-bold">Esqueci minha senha</p>          
+          <p class="text-lg text-gray-800 font-bold">Esqueci minha senha</p>          
       </div>
   </div>
   <div class="mx-auto pt-4">
       <div class="container mx-auto">
         <.form let={f} for={:user} action={Routes.user_reset_password_path(@conn, :create)} class="my-6 w-11/12 mx-auto xl:w-full xl:mx-0">          
           <div class="xl:w-1/4 lg:w-1/2 md:w-1/2 flex flex-col mb-6">
-            <%= label f, :email, class: "pb-2 text-sm font-bold text-gray-800 dark:text-gray-100" %>
+            <%= label f, :email, class: "pb-2 text-sm font-bold text-gray-800" %>
             <%= email_input f, :email, required: true, autocomplete: "email", class: "mb-4 appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm", placeholder: "Endereço de e-mail" %>            
           </div>         
           <div class="container mx-auto w-11/12 xl:w-full">
-              <div class="w-full py-4 sm:px-0 bg-white dark:bg-gray-800 flex justify-start">                            
+              <div class="w-full py-4 sm:px-0 bg-white flex justify-start">                            
                   <button role="button" aria-label="Enviar instruçôes" class="focus:ring-2 focus:ring-offset-2 focus:ring-indigo-700 bg-indigo-700 focus:outline-none transition duration-150 ease-in-out hover:bg-indigo-600 rounded text-white px-8 py-2 text-sm" type="submit">Enviar instruções</button>
               </div>
           </div>      
