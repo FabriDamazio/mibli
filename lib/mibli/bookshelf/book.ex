@@ -1,5 +1,6 @@
 defmodule Mibli.Bookshelf.Book do
   use Ecto.Schema
+  import Ecto.Changeset
 
   schema "books" do
     field :title, :string
@@ -9,5 +10,10 @@ defmodule Mibli.Bookshelf.Book do
     field :isbn, :string
 
     timestamps()
+  end
+
+  def changeset(book, attrs, opts \\ []) do
+    book
+    |> cast(attrs, [:title, :author, :publisher, :total_pages, :isbn])
   end
 end
