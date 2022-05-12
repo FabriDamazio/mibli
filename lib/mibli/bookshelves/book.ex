@@ -1,4 +1,4 @@
-defmodule Mibli.Bookshelf.Book do
+defmodule Mibli.Bookshelves.Book do
   use Ecto.Schema
   import Ecto.Changeset
 
