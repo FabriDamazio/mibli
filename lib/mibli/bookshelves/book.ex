@@ -2,6 +2,14 @@ defmodule Mibli.Bookshelves.Book do
   use Ecto.Schema
   import Ecto.Changeset
 
+  @type t() :: %__MODULE__{
+          title: String.t(),
+          author: String.t(),
+          publisher: String.t(),
+          total_pages: integer(),
+          isbn: String.t()
+        }
+
   schema "books" do
     field :title, :string
     field :author, :string
