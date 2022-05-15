@@ -7,7 +7,8 @@ defmodule Mibli.Bookshelves.Book do
           author: String.t(),
           publisher: String.t(),
           total_pages: integer(),
-          isbn: String.t()
+          isbn: String.t(),
+          user: Mibli.Accounts.User
         }
 
   schema "books" do
@@ -17,6 +18,7 @@ defmodule Mibli.Bookshelves.Book do
     field :total_pages, :integer
     field :isbn, :string
 
+    belongs_to :user, Mibli.Accounts.User
     timestamps()
   end
 

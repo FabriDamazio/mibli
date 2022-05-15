@@ -1,6 +1,8 @@
 defmodule Mibli.Bookshelves do
   @moduledoc """
   The Bookshelves context.
+
+  A bookshelf is only a collection of a user books.
   """
 
   alias Mibli.Repo
