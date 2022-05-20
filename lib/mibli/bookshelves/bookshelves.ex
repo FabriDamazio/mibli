@@ -8,11 +8,13 @@ defmodule Mibli.Bookshelves do
   alias Mibli.Repo
   alias Mibli.Bookshelves.Book
 
-  @spec add_book(Book.t()) :: {atom(), Book.t()}
+  @spec add_book(map()) :: {atom(), Ecto.Changeset.t()}
   @doc """
   Add a book.
   """
-  def add_book(%Book{} = book) do
-    Repo.insert(book)
+  def add_book(attrs) do
+    %Book{}
+    |> Book.changeset(attrs)
+    |> Repo.insert()
   end
 end

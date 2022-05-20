@@ -22,8 +22,9 @@ defmodule Mibli.Bookshelves.Book do
     timestamps()
   end
 
-  def changeset(book, attrs, opts \\ []) do
+  def changeset(book, attrs, _opts \\ []) do
     book
-    |> cast(attrs, [:title, :author, :publisher, :total_pages, :isbn])
+    |> cast(attrs, [:title, :author, :publisher, :total_pages, :isbn, :user_id])
+    |> validate_required([:title, :user_id])
   end
 end
