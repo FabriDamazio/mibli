@@ -1,9 +1,10 @@
 defmodule MibliWeb.Books.NewBookLive do
   use MibliWeb, :live_view
+  alias Mibli.Books
 
   @impl true
   def mount(_params, _session, socket) do
-    {:ok, socket}
+    {:ok, assign(socket, errors: [], valid?: true)}
   end
 
   @impl true
@@ -21,6 +22,12 @@ defmodule MibliWeb.Books.NewBookLive do
               type="text"
               class="border border-slate-300 rounded px-4 py-2 mb-4"
             />
+          </div>
+          <div :if={not @valid?}>
+            <span class="text-red-500">Title
+            <%= {error_msg, _} = Keyword.get(@errors, :title)
+            error_msg %>
+            </span>
           </div>
           <div class="flex flex-col">
             <label for="author" class="text-slate-600 text-lg mb-2">Author</label>
@@ -49,10 +56,17 @@ defmodule MibliWeb.Books.NewBookLive do
   end
 
   @impl true
-  def handle_event("submit_book", _params, socket) do
-    {:noreply,
-     socket
-     |> put_flash(:info, "Book added successfully")
-     |> push_redirect(to: "/books")}
+  def handle_event("submit_book", params, socket) do
+    case Books.add(params) do
+      {:ok, _book} ->
+        {:noreply,
+         socket
+         |> put_flash(:info, "Book added successfully")
+         |> push_redirect(to: "/books")}
+
+      {:error, changeset} ->
+        IO.inspect(changeset.errors)
+        {:noreply, assign(socket, errors: changeset.errors, valid?: changeset.valid?)}
+    end
   end
 end
