@@ -4,7 +4,7 @@ defmodule MibliWeb.Books.BooksLive do
 
   @impl true
   def mount(_params, _session, socket) do
-    socket = assign(socket, books: Books.get_books())
+    socket = assign(socket, books: Books.get_all())
 
     {:ok, socket}
   end

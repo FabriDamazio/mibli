@@ -1,36 +1,15 @@
 defmodule Mibli.Books do
-  def get_books() do
-    [
-      %{
-        title: "Programming Phoenix",
-        author: "Fabricio Damazio",
-        description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-      Voluptatibus quia, nulla! Maiores et perferendis eaque, exercitationem praesentium nihil."
-      },
-      %{
-        title: "Programming Elixir",
-        author: "Fabricio Damazio",
-        description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-      Voluptatibus quia, nulla! Maiores et perferendis eaque, exercitationem praesentium nihil."
-      },
-      %{
-        title: "Programming Elixir",
-        author: "Fabricio Damazio",
-        description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-      Voluptatibus quia, nulla! Maiores et perferendis eaque, exercitationem praesentium nihil."
-      },
-      %{
-        title: "Programming Elixir",
-        author: "Fabricio Damazio",
-        description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-      Voluptatibus quia, nulla! Maiores et perferendis eaque, exercitationem praesentium nihil."
-      },
-      %{
-        title: "Programming Elixir",
-        author: "Fabricio Damazio",
-        description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-      Voluptatibus quia, nulla! Maiores et perferendis eaque, exercitationem praesentium nihil."
-      }
-    ]
+  import Ecto.Query, warn: false
+  alias Mibli.Repo
+  alias Mibli.Books.Book
+
+  def get_all() do
+    Book |> Repo.all()
+  end
+
+  def add(attrs) do
+    %Book{}
+    |> Book.add_book_changeset(attrs)
+    |> Repo.insert()
   end
 end
