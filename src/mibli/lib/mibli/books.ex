@@ -14,8 +14,11 @@ defmodule Mibli.Books do
   end
 
   def delete(id) do
-    Book
-    |> Repo.get!(id)
-    |> Repo.delete()
+    case Repo.get(Book, id) do
+      nil -> {:error, "Book not found"}
+      book ->
+        Repo.delete(book)
+        {:ok, "Book deleted"}
+    end
   end
 end
