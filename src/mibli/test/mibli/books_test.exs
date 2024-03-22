@@ -31,4 +31,17 @@ defmodule Mibli.BooksTest do
     end
   end
 
+  describe "delete/1" do
+    test "delete book" do
+      book = BooksFixtures.book_fixture()
+      assert [book] == Books.get_all()
+      Books.delete(book.id)
+      assert [] == Books.get_all()
+    end
+
+    test "delete book that does not exist" do
+       Books.delete(0)
+    end
+  end
+
 end
