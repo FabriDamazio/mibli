@@ -12,4 +12,10 @@ defmodule Mibli.Books do
     |> Book.add_book_changeset(attrs)
     |> Repo.insert()
   end
+
+  def delete(id) do
+    Book
+    |> Repo.get!(id)
+    |> Repo.delete()
+  end
 end
