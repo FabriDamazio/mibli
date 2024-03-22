@@ -42,6 +42,7 @@ defmodule MibliWeb.Books.BooksLive do
     """
   end
 
+  @impl true
   def handle_event("delete_book", %{"id" => id}, socket) do
     Books.delete(id)
     {:noreply, assign(socket, books: Books.get_all())}
