@@ -14,7 +14,7 @@ defmodule MibliWeb.Books.BooksLive do
     ~H"""
     <h1 class="text-slate-600 text-5xl mb-12">My Books</h1>
     <button class="mt-6 bg-sky-600 hover:bg-sky-700 text-white px-4 py-2 rounded">
-      <.link href={~p"/books/new"}>
+      <.link patch={~p"/books/new"}>
         Add Book
       </.link>
     </button>
