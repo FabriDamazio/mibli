@@ -4,7 +4,7 @@ defmodule MibliWeb.Books.BooksLive do
 
   @impl true
   def mount(_params, _session, socket) do
-    socket = assign(socket, books: Books.get_all())
+    socket = assign(socket, books: Books.get_all_by_user_id(socket.assigns.current_user.id))
 
     {:ok, socket}
   end
@@ -28,7 +28,7 @@ defmodule MibliWeb.Books.BooksLive do
                   <%= book.title %>
                 </h3>
                 <div phx-click="delete_book" phx-value-id={book.id}>
-                  <.icon name="hero-x-circle" class="h-6 w-6 text-slate-500"/>
+                  <.icon name="hero-x-circle" class="h-6 w-6 text-slate-500" />
                 </div>
               </div>
               <p class="text-slate-500 text-base">
@@ -44,7 +44,7 @@ defmodule MibliWeb.Books.BooksLive do
 
   @impl true
   def handle_event("delete_book", %{"id" => id}, socket) do
-    Books.delete(id)
-    {:noreply, assign(socket, books: Books.get_all())}
+    Books.delete(id, socket.assigns.current_user.id)
+    {:noreply, assign(socket, books: Books.get_all_by_user_id(socket.assigns.current_user.id))}
   end
 end

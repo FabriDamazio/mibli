@@ -6,9 +6,8 @@ defmodule Mibli.BooksFixtures do
 
   alias Mibli.Books
 
-
   def book_fixture(attrs \\ %{}) do
-    {:ok , book} =
+    {:ok, book} =
       attrs
       |> add_book_attributes()
       |> Books.add()
@@ -27,5 +26,4 @@ defmodule Mibli.BooksFixtures do
   defp unique_title, do: "Title-#{System.unique_integer()}"
   defp unique_author, do: "Author-#{System.unique_integer()}"
   defp unique_description, do: "Description-#{System.unique_integer()}"
-
 end

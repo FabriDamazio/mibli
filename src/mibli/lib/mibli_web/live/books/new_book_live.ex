@@ -24,9 +24,9 @@ defmodule MibliWeb.Books.NewBookLive do
             />
           </div>
           <div :if={not @valid?}>
-            <span class="text-red-500">Title
-            <%= {error_msg, _} = Keyword.get(@errors, :title)
-            error_msg %>
+            <span class="text-red-500">
+              Title <%= {error_msg, _} = Keyword.get(@errors, :title)
+              error_msg %>
             </span>
           </div>
           <div class="flex flex-col">
@@ -57,6 +57,8 @@ defmodule MibliWeb.Books.NewBookLive do
 
   @impl true
   def handle_event("submit_book", params, socket) do
+    params = Map.put(params, "user_id", socket.assigns.current_user.id)
+
     case Books.add(params) do
       {:ok, _book} ->
         {:noreply,
