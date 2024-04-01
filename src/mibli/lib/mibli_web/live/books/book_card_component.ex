@@ -1,0 +1,28 @@
+defmodule MibliWeb.Books.BookCardComponent do
+  use MibliWeb, :html
+
+  attr :book, :map, required: true
+
+  def book_card(assigns) do
+    ~H"""
+    <section class="max-w-sm rounded overflow-hidden shadow-lg m-4 ">
+      <article class="px-6 py-4">
+        <div class="flex flex-row">
+          <h3 class="text-slate-600 font-bold text-xl mb-2 basis-11/12">
+            <%= assigns.book.title %>
+          </h3>
+          <div phx-click="delete_book" phx-value-id={assigns.book.id}>
+            <.icon name="hero-x-circle" class="h-6 w-6 text-slate-500" />
+          </div>
+        </div>
+        <p class="text-slate-400 text-sm">
+          <%= assigns.book.author || "Unknown" %>
+        </p>
+        <p class="text-slate-500 text-base">
+          <%= assigns.book.description %>
+        </p>
+      </article>
+    </section>
+    """
+  end
+end
