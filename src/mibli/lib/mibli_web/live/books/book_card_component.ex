@@ -21,6 +21,10 @@ defmodule MibliWeb.Books.BookCardComponent do
         <p class="text-slate-500 text-base">
           <%= assigns.book.description %>
         </p>
+        <div class="flex flex-row flex-wrap mt-2">
+          <.tag :if={assigns.book.read} text="Read" color="bg-green-100 text-green-800" />
+          <.tag :if={!assigns.book.read} text="Not Read" color="bg-red-100 text-red-800" />
+        </div>
       </article>
     </section>
     """

@@ -87,6 +87,9 @@ defmodule MibliWeb do
       import MibliWeb.CoreComponents
       import MibliWeb.Gettext
 
+      # Custom components
+      import MibliWeb.Books.TagComponent
+
       # Shortcut for generating JS commands
       alias Phoenix.LiveView.JS
 

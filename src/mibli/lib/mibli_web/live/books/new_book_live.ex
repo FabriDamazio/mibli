@@ -1,10 +1,11 @@
 defmodule MibliWeb.Books.NewBookLive do
+  alias Mibli.Books.Book
   use MibliWeb, :live_view
   alias Mibli.Books
 
   @impl true
   def mount(_params, _session, socket) do
-    {:ok, assign(socket, errors: [], valid?: true)}
+    {:ok, assign(socket, form: to_form(Book.add_book_changeset(%Book{})))}
   end
 
   @impl true
@@ -13,51 +14,47 @@ defmodule MibliWeb.Books.NewBookLive do
     <div>
       <h1 class="text-slate-600 text-5xl mb-12">Add Book</h1>
       <div class="flex flex-col">
-        <form phx-submit="submit_book">
-          <div class="flex flex-col">
-            <label for="title" class="text-slate-600 text-lg mb-2">Title</label>
-            <input
-              id="title"
-              name="title"
-              type="text"
-              class="border border-slate-300 rounded px-4 py-2 mb-4"
-            />
+        <.form for={@form} phx-change="validate" phx-submit="submit_book">
+          <div class="mb-2">
+            <.label for="title">Title</.label>
+            <.input type="text" field={@form[:title]} />
           </div>
-          <div :if={not @valid?}>
-            <span class="text-red-500">
-              Title <%= {error_msg, _} = Keyword.get(@errors, :title)
-              error_msg %>
-            </span>
+          <div class="mb-2">
+            <.label for="author">Author</.label>
+            <.input type="text" field={@form[:author]} />
           </div>
-          <div class="flex flex-col">
-            <label for="author" class="text-slate-600 text-lg mb-2">Author</label>
-            <input
-              id="author"
-              name="author"
-              type="text"
-              class="border border-slate-300 rounded px-4 py-2 mb-4"
-            />
+          <div class="mb-2">
+            <.label for="description">Description</.label>
+            <.input type="text" field={@form[:description]} />
           </div>
-          <div class="flex flex-col">
-            <label for="description" class="text-slate-600 text-lg mb-2">Description</label>
-            <textarea
-              id="description"
-              name="description"
-              class="border border-slate-300 rounded px-4 py-2 mb-4"
-            ></textarea>
+          <div class="mb-2">
+            <.label for="read">Read</.label>
+            <.input type="checkbox" field={@form[:read]} />
           </div>
           <button class="bg-sky-600 hover:bg-sky-700 text-white px-4 py-2 rounded">
             Add Book
           </button>
-        </form>
+        </.form>
       </div>
     </div>
     """
   end
 
   @impl true
-  def handle_event("submit_book", params, socket) do
+  def handle_event("validate", %{"book" => params}, socket) do
+    form =
+      %Book{}
+      |> Book.add_book_changeset(params)
+      |> Map.put(:action, :insert)
+      |> to_form()
+
+    {:noreply, assign(socket, form: form)}
+  end
+
+  @impl true
+  def handle_event("submit_book", %{"book" => params}, socket) do
     params = Map.put(params, "user_id", socket.assigns.current_user.id)
+    IO.inspect(params)
 
     case Books.add(params) do
       {:ok, _book} ->
