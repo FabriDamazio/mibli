@@ -12,7 +12,7 @@ defmodule Mibli.Books.Book do
     timestamps()
   end
 
-  def add_book_changeset(book, params \\ %{}) do
+  def book_changeset(book, params \\ %{}) do
     book
     |> cast(params, [:title, :author, :description, :user_id, :read])
     |> validate_length(:title, min: 1, max: 256)

@@ -10,9 +10,26 @@ defmodule Mibli.Books do
     |> Repo.all()
   end
 
+  def get_by_id(book_id) do
+    Book
+    |> Repo.get(book_id)
+  end
+
+  def update(id, attrs) do
+    case Repo.get(Book, id) do
+      nil ->
+        {:error, "Book not found"}
+
+      book ->
+        book
+        |> Book.book_changeset(attrs)
+        |> Repo.update()
+    end
+  end
+
   def add(attrs) do
     %Book{}
-    |> Book.add_book_changeset(attrs)
+    |> Book.book_changeset(attrs)
     |> Repo.insert()
   end
 
@@ -30,5 +47,10 @@ defmodule Mibli.Books do
           {:error, "Book does not belong to user"}
         end
     end
+  end
+
+  def changeset_book(book, attrs \\ %{}) do
+    book
+    |> Book.book_changeset(attrs)
   end
 end

@@ -5,7 +5,7 @@ defmodule MibliWeb.Books.NewBookLive do
 
   @impl true
   def mount(_params, _session, socket) do
-    {:ok, assign(socket, form: to_form(Book.add_book_changeset(%Book{})))}
+    {:ok, assign(socket, form: to_form(Book.book_changeset(%Book{})))}
   end
 
   @impl true
@@ -44,7 +44,7 @@ defmodule MibliWeb.Books.NewBookLive do
   def handle_event("validate", %{"book" => params}, socket) do
     form =
       %Book{}
-      |> Book.add_book_changeset(params)
+      |> Book.book_changeset(params)
       |> Map.put(:action, :insert)
       |> to_form()
 
