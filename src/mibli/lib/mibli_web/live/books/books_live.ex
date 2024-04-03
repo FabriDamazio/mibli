@@ -6,12 +6,35 @@ defmodule MibliWeb.Books.BooksLive do
 
   @impl true
   def mount(_params, _session, socket) do
-    socket = assign(socket,
-      books: Books.get_all_by_user_id(socket.assigns.current_user.id),
-      form: to_form(Books.changeset_book(%Book{}))
-    )
+    socket =
+      assign(socket,
+        books: Books.get_all_by_user_id(socket.assigns.current_user.id),
+        form: to_form(Books.changeset_book(%Book{})),
+        page_title: "My Books"
+      )
 
     {:ok, socket}
+  end
+
+  @impl true
+  def handle_params(%{"id" => id}, _uri, socket) do
+    book = Books.get_by_id(id)
+
+    socket =
+      socket
+      |> push_event("show-modal", %{
+        to: "#modal-show",
+        attr: "data-show"
+      })
+      |> assign(:form, to_form(Books.changeset_book(book)))
+      |> assign(:page_title, "Editing #{book.title}")
+
+    {:noreply, socket}
+  end
+
+  @impl true
+  def handle_params(_params, _uri, socket) do
+    {:noreply, assign(socket, page_title: "My Books")}
   end
 
   @impl true
@@ -25,13 +48,15 @@ defmodule MibliWeb.Books.BooksLive do
     </button>
     <div>
       <ul class="flex flex-row flex-wrap">
-        <li :for={book <- @books} class="min-w-80" phx-click="book_details" phx-value-id={book.id}>
-          <.book_card book={book} />
+        <li :for={book <- @books} class="min-w-80">
+          <.link patch={~p"/books/edit/#{book.id}"}>
+            <.book_card book={book} />
+          </.link>
         </li>
       </ul>
     </div>
     <div id="modal-show" data-show={show_modal("edit_book_modal")}>
-      <.modal id="edit_book_modal">
+      <.modal id="edit_book_modal" on_cancel={JS.navigate(~p"/books")}>
         <div class="bg-white p-6 rounded-lg">
           <h2 class="text-2xl text-slate-600">Edit Book</h2>
           <p class="text-slate-600">
@@ -53,7 +78,11 @@ defmodule MibliWeb.Books.BooksLive do
                 <.label for="read">Read</.label>
                 <.input type="checkbox" field={@form[:read]} />
               </div>
-              <button class="mt-6 bg-sky-600 hover:bg-sky-700 text-white px-4 py-2 rounded" phx-submit="save_edit" phx-click={hide_modal("edit_book_modal")}>
+              <button
+                class="mt-6 bg-sky-600 hover:bg-sky-700 text-white px-4 py-2 rounded"
+                phx-submit="save_edit"
+                phx-click={hide_modal("edit_book_modal")}
+              >
                 Save
               </button>
             </.form>
@@ -74,30 +103,18 @@ defmodule MibliWeb.Books.BooksLive do
   def handle_event("save_edit", %{"book" => book}, socket) do
     case Books.update(book["id"], book) do
       {:ok, _book} ->
-        socket =
-          socket
-          |> update(:books, fn _ -> Books.get_all_by_user_id(socket.assigns.current_user.id) end)
+        socket = push_patch(socket, to: ~p"/books")
 
-        IO.inspect(socket.assigns.books)
+        socket =
+          update(socket, :books, fn _ ->
+            Books.get_all_by_user_id(socket.assigns.current_user.id)
+          end)
 
         {:noreply, socket}
 
       {:error, _reason} ->
         {:noreply, socket}
     end
-    {:noreply, socket}
-  end
-
-  @impl true
-  def handle_event("book_details", %{"id" => id}, socket) do
-    book = Books.get_by_id(id)
-
-    socket = push_event(socket, "show-modal", %{
-      to: "#modal-show",
-      attr: "data-show"
-    })
-
-    {:noreply, assign(socket, form: to_form(Books.changeset_book(book)))}
   end
 
   @impl true

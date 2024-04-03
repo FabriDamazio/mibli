@@ -71,6 +71,7 @@ defmodule MibliWeb.Router do
 
       live "/books", Books.BooksLive, :index
       live "/books/new", Books.NewBookLive, :new
+      live "/books/edit/:id", Books.BooksLive, :edit
     end
   end
 
