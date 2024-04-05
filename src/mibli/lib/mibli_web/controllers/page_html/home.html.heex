@@ -1,10 +1,118 @@
 <.flash_group flash={@flash} />
-<div class="bg-white-500 text-slate-700 py-20 text-center">
-  <h1 class="text-4xl font-bold">Welcome to Mibli</h1>
-  <p class="mt-4">Manage your books and track your reading.</p>
-  <button class="mt-6 bg-sky-600 hover:bg-sky-700 text-white px-4 py-2 rounded">
-    <.link href={~p"/books"}>
-      Get Started
+<div class="bg-gunmetal py-20 text-seasalt-500">
+  <div class="container mx-auto text-center">
+    <h1 class="text-6xl font-bold mb-4 text-seasalt-500">Welcome to Mibli</h1>
+    <p class="text-lg mb-8 text-seasalt-500">
+      Your platform to register, track and discover books.
+    </p>
+    <.link
+      href={~p"/books"}
+      class="bg-cambridge_blue-500 text-seasalt-600 px-6 py-3 rounded-full font-bold hover:bg-cambridge_blue-700 hover:text-seasalt-700 transition duration-300"
+    >
+      Start Your Reading Journey
     </.link>
-  </button>
+  </div>
 </div>
+
+<section class="bg-seasalt-900 py-20 text-gunmetal-500">
+  <div class="container mx-auto px-4">
+    <h2 class="text-4xl font-bold text-center text-gunmetal-400 mb-12">Features at a Glance</h2>
+    <div class="flex flex-wrap -mx-4 text-center">
+      <!-- Feature 1 -->
+      <div class="w-full md:w-1/2 lg:w-1/4 px-4 mb-8">
+        <.icon name="hero-document-plus-solid" class="text-gunmetal-400 h-14 w-14 mt-6 mb-6" />
+        <h3 class="text-xl font-semibold mb-2">Catalog Your Books</h3>
+        <p>
+          Effortlessly add books to your personal digital library and organize them in categories of your choosing.
+        </p>
+      </div>
+      <!-- Feature 2 -->
+      <div class="w-full md:w-1/2 lg:w-1/4 px-4 mb-8">
+        <.icon name="hero-book-open-solid" class="text-gunmetal-400 h-14 w-14 mt-6 mb-6" />
+        <h3 class="text-xl font-semibold mb-2">Track Your Reading</h3>
+        <p>Monitor your reading progress, set goals, and review your history at any time.</p>
+      </div>
+      <!-- Feature 3 -->
+      <div class="w-full md:w-1/2 lg:w-1/4 px-4 mb-8">
+        <.icon
+          name="hero-document-magnifying-glass-solid"
+          class="text-gunmetal-400 h-14 w-14 mt-6 mb-6"
+        />
+        <h3 class="text-xl font-semibold mb-2">
+          Discover New Titles<span class="bg-indian_red-500 text-white px-2 py-1 rounded-full text-xs font-medium ml-2">Coming Soon</span>
+        </h3>
+        <p>
+          Explore personalized book recommendations based on your preferences and reading habits.
+        </p>
+      </div>
+      <!-- Feature 4 -->
+      <div class="w-full md:w-1/2 lg:w-1/4 px-4 mb-8">
+        <.icon
+          name="hero-chat-bubble-left-right-solid"
+          class=" text-gunmetal-400 h-14 w-14 mt-6 mb-6"
+        />
+        <h3 class="text-xl font-semibold mb-2">
+          Connect with a Community<span class="bg-indian_red-500 text-white px-2 py-1 rounded-full text-xs font-medium ml-2">Coming Soon</span>
+        </h3>
+        <p>Join discussions, share reviews, and connect with fellow book lovers.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="bg-seasalt-500 py-20">
+  <div class="container mx-auto px-4">
+    <div class="text-center max-w-4xl mx-auto">
+      <h2 class="text-4xl font-bold text-gunmetal-500 mb-6">About Us</h2>
+      <p class="text-lg text-gunmetal-400">
+        We are a duo passionate about books and technology. The journey of Mibli began from a simple, yet profound need to manage our own expanding personal library.  It's designed to help you manage your books, discover new favorites, and track your reading journey. Join us on this literary adventure.
+      </p>
+    </div>
+  </div>
+</section>
+
+<footer class="bg-gunmetal-500 text-seasalt-500">
+  <div class="container mx-auto px-4 py-8">
+    <div class="flex flex-wrap justify-between items-center">
+      <div class="w-full md:w-1/4 mb-6 md:mb-0">
+        <h3 class="text-lg font-bold mb-2">Mibli</h3>
+        <p>Read more and better.</p>
+      </div>
+      <div class="w-full md:w-1/4 mb-6 md:mb-0">
+        <h3 class="text-lg font-bold mb-2">Explore</h3>
+        <ul>
+          <li><a href="#" class="hover:text-seasalt-300 transition duration-150">About Us</a></li>
+          <li><a href="#" class="hover:text-seasalt-300 transition duration-150">Features</a></li>
+          <li><a href="#" class="hover:text-seasalt-300 transition duration-150">Contact</a></li>
+        </ul>
+      </div>
+      <div class="w-full md:w-1/4 mb-6 md:mb-0">
+        <h3 class="text-lg font-bold mb-2">Follow Us</h3>
+        <ul>
+          <li><a href="#" class="hover:text-seasalt-300 transition duration-150">Twitter</a></li>
+          <li><a href="#" class="hover:text-seasalt-300 transition duration-150">Facebook</a></li>
+          <li>
+            <a href="#" class="hover:text-seasalt-300 transition duration-150">Instagram</a>
+          </li>
+        </ul>
+      </div>
+      <div class="w-full md:w-1/4 mb-6 md:mb-0">
+        <h3 class="text-lg font-bold mb-2">Support</h3>
+        <ul>
+          <li><a href="#" class="hover:text-seasalt-300 transition duration-150">FAQ</a></li>
+          <li>
+            <a href="#" class="hover:text-seasalt-300 transition duration-150">Help Center</a>
+          </li>
+          <li>
+            <a href="#" class="hover:text-seasalt-300 transition duration-150">
+              Terms of Service
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="text-center mt-8">
+      <p>&copy; 2024 Mibli. All rights reserved.</p>
+    </div>
+  </div>
+</footer>
