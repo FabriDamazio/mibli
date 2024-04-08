@@ -11,7 +11,12 @@ defmodule MibliWeb.Books.BookCardComponent do
           <h3 class="text-slate-600 font-bold text-xl mb-2 basis-11/12">
             <%= assigns.book.title %>
           </h3>
-          <div phx-click="delete_book" phx-value-id={assigns.book.id}>
+          <div
+            phx-click="delete_book"
+            phx-value-id={assigns.book.id}
+            data-confirm="Are you sure?"
+            class="cursor-pointer"
+          >
             <.icon name="hero-x-circle" class="h-6 w-6 text-slate-500" />
           </div>
         </div>

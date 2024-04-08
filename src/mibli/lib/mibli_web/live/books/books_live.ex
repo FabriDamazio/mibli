@@ -49,9 +49,9 @@ defmodule MibliWeb.Books.BooksLive do
     <div>
       <ul class="flex flex-row flex-wrap">
         <li :for={book <- @books} class="min-w-80">
-          <.link patch={~p"/books/edit/#{book.id}"}>
+          <div phx-click="edit_book" phx-value-id={book.id} class="cursor-pointer">
             <.book_card book={book} />
-          </.link>
+          </div>
         </li>
       </ul>
     </div>
@@ -94,9 +94,21 @@ defmodule MibliWeb.Books.BooksLive do
   end
 
   @impl true
+  def handle_event("edit_book", %{"id" => id}, socket) do
+    socket = push_patch(socket, to: ~p"/books/edit/#{id}")
+    {:noreply, socket}
+  end
+
+  @impl true
   def handle_event("delete_book", %{"id" => id}, socket) do
     Books.delete(id, socket.assigns.current_user.id)
-    {:noreply, assign(socket, books: Books.get_all_by_user_id(socket.assigns.current_user.id))}
+
+    socket =
+      socket
+      |> assign(:books, Books.get_all_by_user_id(socket.assigns.current_user.id))
+      |> put_flash(:info, "Book removed successfully")
+
+    {:noreply, socket}
   end
 
   @impl true
