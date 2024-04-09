@@ -8,7 +8,7 @@ defmodule MibliWeb.UserLoginLive do
         Sign in to account
         <:subtitle>
           Don't have an account?
-          <.link navigate={~p"/users/register"} class="font-semibold text-brand hover:underline">
+          <.link navigate={~p"/users/register"} class="font-semibold text-indian_red-500 hover:underline">
             Sign up
           </.link>
           for an account now.
@@ -26,7 +26,7 @@ defmodule MibliWeb.UserLoginLive do
           </.link>
         </:actions>
         <:actions>
-          <.button phx-disable-with="Signing in..." class="w-full">
+          <.button phx-disable-with="Signing in..." class="w-full bg-gunmetal text-seasalt-600">
             Sign in <span aria-hidden="true">→</span>
           </.button>
         </:actions>

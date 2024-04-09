@@ -26,7 +26,7 @@ defmodule MibliWeb.UserResetPasswordLive do
           required
         />
         <:actions>
-          <.button phx-disable-with="Resetting..." class="w-full">Reset Password</.button>
+          <.button phx-disable-with="Resetting..." class="w-full bg-gunmetal text-seasalt-600">Reset Password</.button>
         </:actions>
       </.simple_form>
 

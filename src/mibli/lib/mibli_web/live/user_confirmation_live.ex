@@ -11,7 +11,7 @@ defmodule MibliWeb.UserConfirmationLive do
       <.simple_form for={@form} id="confirmation_form" phx-submit="confirm_account">
         <.input field={@form[:token]} type="hidden" />
         <:actions>
-          <.button phx-disable-with="Confirming..." class="w-full">Confirm my account</.button>
+          <.button phx-disable-with="Confirming..." class="w-full bg-gunmetal text-seasalt-600">Confirm my account</.button>
         </:actions>
       </.simple_form>
 
