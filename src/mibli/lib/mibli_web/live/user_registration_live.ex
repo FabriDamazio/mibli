@@ -11,7 +11,10 @@ defmodule MibliWeb.UserRegistrationLive do
         Register for an account
         <:subtitle>
           Already registered?
-          <.link navigate={~p"/users/log_in"} class="font-semibold text-indian_red-500 hover:underline">
+          <.link
+            navigate={~p"/users/log_in"}
+            class="font-semibold text-indian_red-500 hover:underline"
+          >
             Sign in
           </.link>
           to your account now.
@@ -35,7 +38,9 @@ defmodule MibliWeb.UserRegistrationLive do
         <.input field={@form[:password]} type="password" label="Password" required />
 
         <:actions>
-          <.button phx-disable-with="Creating account..." class="w-full bg-gunmetal text-seasalt-600">Create an account</.button>
+          <.button phx-disable-with="Creating account..." class="w-full bg-gunmetal text-seasalt-600">
+            Create an account
+          </.button>
         </:actions>
       </.simple_form>
     </div>

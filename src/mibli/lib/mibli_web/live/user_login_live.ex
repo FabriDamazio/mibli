@@ -8,7 +8,10 @@ defmodule MibliWeb.UserLoginLive do
         Sign in to account
         <:subtitle>
           Don't have an account?
-          <.link navigate={~p"/users/register"} class="font-semibold text-indian_red-500 hover:underline">
+          <.link
+            navigate={~p"/users/register"}
+            class="font-semibold text-indian_red-500 hover:underline"
+          >
             Sign up
           </.link>
           for an account now.

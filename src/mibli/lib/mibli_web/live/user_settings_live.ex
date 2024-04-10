@@ -29,7 +29,9 @@ defmodule MibliWeb.UserSettingsLive do
             required
           />
           <:actions>
-            <.button phx-disable-with="Changing..." class="bg-gunmetal text-seasalt-600">Change Email</.button>
+            <.button phx-disable-with="Changing..." class="bg-gunmetal text-seasalt-600">
+              Change Email
+            </.button>
           </:actions>
         </.simple_form>
       </div>
@@ -65,7 +67,9 @@ defmodule MibliWeb.UserSettingsLive do
             required
           />
           <:actions>
-            <.button phx-disable-with="Changing..." class="bg-gunmetal text-seasalt-600">Change Password</.button>
+            <.button phx-disable-with="Changing..." class="bg-gunmetal text-seasalt-600">
+              Change Password
+            </.button>
           </:actions>
         </.simple_form>
       </div>
