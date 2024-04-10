@@ -9,7 +9,7 @@ defmodule MibliWeb.Books.BooksLive do
     socket =
       assign(socket,
         books: Books.get_all_by_user_id(socket.assigns.current_user.id),
-        form: to_form(Books.changeset_book(%Book{})),
+        form: to_form(Books.changeset(%Book{})),
         page_title: "My Books"
       )
 
@@ -26,7 +26,7 @@ defmodule MibliWeb.Books.BooksLive do
         to: "#modal-show",
         attr: "data-show"
       })
-      |> assign(:form, to_form(Books.changeset_book(book)))
+      |> assign(:form, to_form(Books.changeset(book)))
       |> assign(:page_title, "Editing #{book.title}")
 
     {:noreply, socket}
