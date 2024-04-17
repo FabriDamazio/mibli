@@ -58,7 +58,8 @@ defmodule Mibli.MixProject do
       {:gettext, "~> 0.20"},
       {:jason, "~> 1.2"},
       {:dns_cluster, "~> 0.1.1"},
-      {:bandit, "~> 1.2"}
+      {:bandit, "~> 1.2"},
+      {:lcov_ex, "~> 0.3", only: [:test], runtime: false}
     ]
   end
 
@@ -80,7 +81,12 @@ defmodule Mibli.MixProject do
         "tailwind mibli --minify",
         "esbuild mibli --minify",
         "phx.digest"
-      ]
+      ],
+      coverage: ["test --cover", "lcov"]
     ]
+  end
+
+  def cli do
+    [preferred_envs: [coverage: :test]]
   end
 end
