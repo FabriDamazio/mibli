@@ -19,6 +19,21 @@ defmodule Mibli.BooksTest do
 
       assert([book_one, book_two] == Books.get_all_by_user_id(user.id))
     end
+
+    test "returns list of registered books filtered by read property" do
+      user = AccountsFixtures.user_fixture()
+      book_one = BooksFixtures.book_fixture(%{user_id: user.id, read: true})
+      book_two = BooksFixtures.book_fixture(%{user_id: user.id, read: false})
+
+      assert([book_one] == Books.get_all_by_user_id(user.id, %{read: true}))
+      assert([book_two] == Books.get_all_by_user_id(user.id, %{read: false}))
+    end
+
+    test "returns an empty list if the user id is not valid" do
+      user = AccountsFixtures.user_fixture()
+      invalid_user_id = user.id + 1
+      assert([] == Books.get_all_by_user_id(invalid_user_id))
+    end
   end
 
   describe "add_1" do
@@ -44,12 +59,21 @@ defmodule Mibli.BooksTest do
       book = BooksFixtures.book_fixture(%{user_id: user.id})
 
       assert [book] == Books.get_all_by_user_id(user.id)
-      Books.delete(book.id, user.id)
+      assert {:ok, _} = Books.delete(book.id, user.id)
       assert [] == Books.get_all_by_user_id(user.id)
     end
 
-    test "delete book that does not exist" do
-      Books.delete(0, 1)
+    test "cannot delete book that does not exist" do
+      assert {:error, _} = Books.delete(0, 1)
+    end
+
+    test "cannot delete book that belongs to another user" do
+      user = AccountsFixtures.user_fixture()
+      book = BooksFixtures.book_fixture(%{user_id: user.id})
+
+      invalid_user_id = user.id + 1
+
+      assert {:error, _} = Books.delete(book.id, invalid_user_id)
     end
   end
 end

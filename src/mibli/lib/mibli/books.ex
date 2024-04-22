@@ -8,21 +8,36 @@ defmodule Mibli.Books do
   alias Mibli.Books.Book
 
   @doc """
-  Returns all books from a specific user.
+  Returns all books from a specific user matching the given `filter`.
 
   ## Examples
 
-    iex> get_all_by_user_id(1)
+    Example filter:
+    %{read: true}
+
+    iex> get_all_by_user_id(1, filter_map)
     [%Book{}, ...]
 
     iex> get_all_by_user_id(2)
     []
   """
-  def get_all_by_user_id(user_id) do
-    Book
-    |> where([b], b.user_id == ^user_id)
+  def get_all_by_user_id(user_id, filter \\ %{}) do
+    from(Book)
+    |> filter_by_user(user_id)
+    |> filter_by_read(filter)
     |> Repo.all()
   end
+
+  defp filter_by_user(query, user_id) do
+    where(query, user_id: ^user_id)
+  end
+
+  defp filter_by_read(query, %{read: read}) do
+    where(query, read: ^read)
+  end
+
+  defp  filter_by_read(query, _filter), do: query
+
 
   @doc """
   Get a single book by id.
@@ -92,8 +107,8 @@ defmodule Mibli.Books do
     iex> delete(2, 1)
     {:error, message}
   """
-  def delete(id, user_id) do
-    case Repo.get(Book, id) do
+  def delete(book_id, user_id) do
+    case Repo.get(Book, book_id) do
       nil ->
         {:error, "Book not found"}
 
@@ -102,7 +117,7 @@ defmodule Mibli.Books do
           Repo.delete(book)
           {:ok, "Book deleted"}
         else
-          Logger.warning("Tried to delete a book that does not belong to the current user.")
+          Logger.notice("Tried to delete a book that does not belong to the current user.")
           {:error, "Book does not belong to user"}
         end
     end
