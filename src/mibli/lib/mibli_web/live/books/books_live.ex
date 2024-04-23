@@ -18,18 +18,23 @@ defmodule MibliWeb.Books.BooksLive do
 
   @impl true
   def handle_params(%{"id" => id}, _uri, socket) do
-    book = Books.get_by_id(id)
+    case Books.get_by_id(id) do
+      %Book{} = book ->
+        socket =
+          socket
+          |> push_event("show-modal", %{
+            to: "#modal-show",
+            attr: "data-show"
+          })
+          |> assign(:form, to_form(Books.changeset(book)))
+          |> assign(:page_title, "Editing #{book.title}")
 
-    socket =
-      socket
-      |> push_event("show-modal", %{
-        to: "#modal-show",
-        attr: "data-show"
-      })
-      |> assign(:form, to_form(Books.changeset(book)))
-      |> assign(:page_title, "Editing #{book.title}")
+        {:noreply, socket}
 
-    {:noreply, socket}
+      _ -> {:noreply, push_patch(socket, to: ~p"/books")}
+    end
+
+
   end
 
   @impl true
@@ -60,7 +65,8 @@ defmodule MibliWeb.Books.BooksLive do
         <div class="bg-white p-6 rounded-lg">
           <h2 class="text-2xl text-slate-600">Edit Book</h2>
           <p class="text-slate-600">
-            <.form for={@form} phx-submit="save_edit" phx-change="validate">
+            <.form for={@form} id="modal-form"
+              phx-submit="save_edit" phx-change="validate">
               <.input type="hidden" field={@form[:id]} />
               <div class="mb-2">
                 <.label for="title">Title</.label>
@@ -79,6 +85,7 @@ defmodule MibliWeb.Books.BooksLive do
                 <.input type="checkbox" field={@form[:read]} />
               </div>
               <button
+                id="save-button"
                 class="mt-6 bg-sky-600 hover:bg-sky-700 text-white px-4 py-2 rounded"
                 phx-submit="save_edit"
                 phx-click={hide_modal("edit_book_modal")}
@@ -115,7 +122,10 @@ defmodule MibliWeb.Books.BooksLive do
   def handle_event("save_edit", %{"book" => book}, socket) do
     case Books.update(book["id"], book) do
       {:ok, _book} ->
-        socket = push_patch(socket, to: ~p"/books")
+        socket =
+          socket
+          |> push_patch(to: ~p"/books")
+          |> put_flash(:info, "Book saved.")
 
         socket =
           update(socket, :books, fn _ ->
