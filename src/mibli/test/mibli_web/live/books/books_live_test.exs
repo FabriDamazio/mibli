@@ -47,11 +47,41 @@ defmodule MibliWeb.BooksLiveTest do
       assert %{"error" => "You must log in to access this page."} = flash
     end
 
-    test "redirects to books list if book does not exists", %{conn: conn} do
-       assert {:error, redirect} =
+    test "renders edit book modal when book card is clicked", %{conn: conn} do
+      user = AccountsFixtures.user_fixture()
+      book = BooksFixtures.book_fixture(%{user_id: user.id})
+
+      {:ok, lv, _html} =
         conn
-        |> log_in_user(AccountsFixtures.user_fixture())
-        |> live(~p"/books/edit/1")
+        |> log_in_user(user)
+        |> live(~p"/books")
+
+      assert lv
+        |> element("section#bookcard-#{book.id}")
+        |> render_click() =~ "Edit Book"
+    end
+
+    test "redirects to edit path when book card is clicked", %{conn: conn} do
+      user = AccountsFixtures.user_fixture()
+      book = BooksFixtures.book_fixture(%{user_id: user.id})
+
+      {:ok, lv, _html} =
+        conn
+        |> log_in_user(user)
+        |> live(~p"/books")
+
+        lv
+        |> element("section#bookcard-#{book.id}")
+        |> render_click()
+
+        assert_patch(lv, "/books/edit/#{book.id}")
+    end
+
+    test "redirects to books list if book does not exists", %{conn: conn} do
+      assert {:error, redirect} =
+               conn
+               |> log_in_user(AccountsFixtures.user_fixture())
+               |> live(~p"/books/edit/1")
 
       assert {:live_redirect, %{to: path, flash: flash}} = redirect
       assert path == ~p"/books"
@@ -68,8 +98,8 @@ defmodule MibliWeb.BooksLiveTest do
         |> live(~p"/books/edit/#{book.id}")
 
       assert lv
-        |> element("form#modal-form")
-        |> render_submit(%{title: "title"}) =~ "Book saved."
+             |> element("form#modal-form")
+             |> render_submit(%{title: "title"}) =~ "Book saved."
 
       assert %{module: MibliWeb.Books.BooksLive} = lv
     end
@@ -83,9 +113,9 @@ defmodule MibliWeb.BooksLiveTest do
         |> log_in_user(user)
         |> live(~p"/books/edit/#{book.id}")
 
-        lv
-        |> element("form#modal-form")
-        |> render_submit(%{title: "title"})
+      lv
+      |> element("form#modal-form")
+      |> render_submit(%{title: "title"})
 
       assert_patch(lv, "/books", 30)
     end
