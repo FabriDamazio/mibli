@@ -6,7 +6,7 @@ defmodule MibliWeb.Books.BookCardComponent do
 
   def book_card(assigns) do
     ~H"""
-    <section class="max-w-sm rounded overflow-hidden shadow-lg m-4" {@rest}>
+    <section id={"bookcard-#{@book.id }"} class="max-w-sm rounded overflow-hidden shadow-lg m-4" {@rest}>
       <article class="px-6 py-4">
         <div class="flex flex-row">
           <h3 class="text-slate-600 font-bold text-xl mb-2 basis-11/12">

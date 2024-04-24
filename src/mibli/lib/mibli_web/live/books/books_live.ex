@@ -55,7 +55,6 @@ defmodule MibliWeb.Books.BooksLive do
         <li :for={book <- @books} class="min-w-80">
           <.book_card
             book={book}
-            id="editcard"
             phx-click="edit_book"
             phx-value-id={book.id}
             class="cursor-pointer"
