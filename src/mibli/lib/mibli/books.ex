@@ -36,8 +36,7 @@ defmodule Mibli.Books do
     where(query, read: ^read)
   end
 
-  defp  filter_by_read(query, _filter), do: query
-
+  defp filter_by_read(query, _filter), do: query
 
   @doc """
   Get a single book by id.
