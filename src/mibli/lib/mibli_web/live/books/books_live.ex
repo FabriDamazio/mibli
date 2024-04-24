@@ -31,10 +31,9 @@ defmodule MibliWeb.Books.BooksLive do
 
         {:noreply, socket}
 
-      _ -> {:noreply, push_patch(socket, to: ~p"/books")}
+      _ ->
+        {:noreply, push_patch(socket, to: ~p"/books")}
     end
-
-
   end
 
   @impl true
@@ -54,9 +53,13 @@ defmodule MibliWeb.Books.BooksLive do
     <div>
       <ul class="flex flex-row flex-wrap">
         <li :for={book <- @books} class="min-w-80">
-          <div phx-click="edit_book" phx-value-id={book.id} class="cursor-pointer">
-            <.book_card book={book} />
-          </div>
+          <.book_card
+            book={book}
+            id="editcard"
+            phx-click="edit_book"
+            phx-value-id={book.id}
+            class="cursor-pointer"
+          />
         </li>
       </ul>
     </div>
@@ -65,8 +68,7 @@ defmodule MibliWeb.Books.BooksLive do
         <div class="bg-white p-6 rounded-lg">
           <h2 class="text-2xl text-slate-600">Edit Book</h2>
           <p class="text-slate-600">
-            <.form for={@form} id="modal-form"
-              phx-submit="save_edit" phx-change="validate">
+            <.form for={@form} id="modal-form" phx-submit="save_edit" phx-change="validate">
               <.input type="hidden" field={@form[:id]} />
               <div class="mb-2">
                 <.label for="title">Title</.label>
