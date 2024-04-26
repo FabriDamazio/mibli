@@ -6,7 +6,7 @@ defmodule Mibli.BooksTest do
   alias Mibli.BooksFixtures
   alias Mibli.AccountsFixtures
 
-  describe "get_all/0" do
+  describe "get_all_by_user_id/2" do
     test "returns an empty list if no books are found" do
       user = AccountsFixtures.user_fixture()
       assert([] == Books.get_all_by_user_id(user.id))
@@ -36,7 +36,7 @@ defmodule Mibli.BooksTest do
     end
   end
 
-  describe "add_1" do
+  describe "add/1" do
     test "Title is required" do
       user = AccountsFixtures.user_fixture()
 
@@ -74,6 +74,30 @@ defmodule Mibli.BooksTest do
       invalid_user_id = user.id + 1
 
       assert {:error, _} = Books.delete(book.id, invalid_user_id)
+    end
+  end
+
+  describe "update/2" do
+    test "updates book data." do
+      user = AccountsFixtures.user_fixture()
+      book = BooksFixtures.book_fixture(%{user_id: user.id})
+
+      updated_book_data = %{
+        title: "updated title",
+        description: "updated description",
+        read: true
+      }
+
+      assert {:ok, book_schema} = Books.update(book.id, updated_book_data)
+      assert book_schema.title == updated_book_data.title
+      assert book_schema.description == updated_book_data.description
+      assert book_schema.read == updated_book_data.read
+    end
+
+    test "returns :error if book not found" do
+      invalid_id = 1
+
+      assert {:error, _} = Books.update(invalid_id, %{})
     end
   end
 end
