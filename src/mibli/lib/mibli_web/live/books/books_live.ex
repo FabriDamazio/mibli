@@ -53,12 +53,7 @@ defmodule MibliWeb.Books.BooksLive do
     <div>
       <ul class="flex flex-row flex-wrap">
         <li :for={book <- @books} class="min-w-80">
-          <.book_card
-            book={book}
-            phx-click="edit_book"
-            phx-value-id={book.id}
-            class="cursor-pointer"
-          />
+          <.book_card book={book} phx-click="edit_book" phx-value-id={book.id} class="cursor-pointer" />
         </li>
       </ul>
     </div>

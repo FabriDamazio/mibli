@@ -57,8 +57,8 @@ defmodule MibliWeb.BooksLiveTest do
         |> live(~p"/books")
 
       assert lv
-        |> element("section#bookcard-#{book.id}")
-        |> render_click() =~ "Edit Book"
+             |> element("section#bookcard-#{book.id}")
+             |> render_click() =~ "Edit Book"
     end
 
     test "redirects to edit path when book card is clicked", %{conn: conn} do
@@ -70,11 +70,11 @@ defmodule MibliWeb.BooksLiveTest do
         |> log_in_user(user)
         |> live(~p"/books")
 
-        lv
-        |> element("section#bookcard-#{book.id}")
-        |> render_click()
+      lv
+      |> element("section#bookcard-#{book.id}")
+      |> render_click()
 
-        assert_patch(lv, "/books/edit/#{book.id}")
+      assert_patch(lv, "/books/edit/#{book.id}")
     end
 
     test "redirects to books list if book does not exists", %{conn: conn} do
