@@ -32,7 +32,7 @@ defmodule Mibli.Books do
     where(query, user_id: ^user_id)
   end
 
-  defp filter_by_read(query, %{read: read}) do
+  defp filter_by_read(query, %{read: read}) when is_boolean(read) do
     where(query, read: ^read)
   end
 

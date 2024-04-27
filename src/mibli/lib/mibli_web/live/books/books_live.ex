@@ -9,6 +9,7 @@ defmodule MibliWeb.Books.BooksLive do
     socket =
       assign(socket,
         books: Books.get_all_by_user_id(socket.assigns.current_user.id),
+        filters: %{read: ""},
         form: to_form(Books.changeset(%Book{})),
         page_title: "My Books"
       )
@@ -37,7 +38,15 @@ defmodule MibliWeb.Books.BooksLive do
   end
 
   @impl true
-  def handle_params(_params, _uri, socket) do
+  def handle_params(params, _uri, socket) do
+    filters = extract_filters(params)
+
+    socket =
+      assign(socket,
+        books: Books.get_all_by_user_id(socket.assigns.current_user.id, filters),
+        filters: filters
+      )
+
     {:noreply, assign(socket, page_title: "My Books")}
   end
 
@@ -45,11 +54,28 @@ defmodule MibliWeb.Books.BooksLive do
   def render(assigns) do
     ~H"""
     <h1 class="text-slate-600 text-5xl mb-12">My Books</h1>
-    <button class="mt-6 bg-sky-600 hover:bg-sky-700 text-white px-4 py-2 rounded">
-      <.link patch={~p"/books/new"}>
-        Add Book
-      </.link>
-    </button>
+    <div class="flex flex-nowrap items-center">
+      <button class="mr-12 bg-sky-600 hover:bg-sky-700 text-white px-4 py-2 rounded">
+        <.link patch={~p"/books/new"}>
+          Add Book
+        </.link>
+      </button>
+      <div class="mr-6">
+        <span>
+          Filters:
+        </span>
+      </div>
+      <form phx-change="filter">
+        <div>
+          <select name="read_filter">
+            <%= Phoenix.HTML.Form.options_for_select(
+              [-: "", Read: "true", "Not Read": "false"],
+              @filters.read
+            ) %>
+          </select>
+        </div>
+      </form>
+    </div>
     <div>
       <ul class="flex flex-row flex-wrap">
         <li :for={book <- @books} class="min-w-80">
@@ -94,6 +120,16 @@ defmodule MibliWeb.Books.BooksLive do
       </.modal>
     </div>
     """
+  end
+
+  @impl true
+  def handle_event("filter", %{"read_filter" => read}, socket) do
+    if read === "" do
+      {:noreply, push_patch(socket, to: ~p"/books")}
+    else
+      params = %{read: read}
+      {:noreply, push_patch(socket, to: ~p"/books?#{params}")}
+    end
   end
 
   @impl true
@@ -144,5 +180,16 @@ defmodule MibliWeb.Books.BooksLive do
       |> to_form()
 
     {:noreply, assign(socket, form: form)}
+  end
+
+  defp extract_filters(params) when is_map(params) do
+    read_param =
+      case params["read"] do
+        "true" -> true
+        "false" -> false
+        _ -> ""
+      end
+
+    %{read: read_param}
   end
 end
