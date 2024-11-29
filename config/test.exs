@@ -1,4 +1,5 @@
 import Config
+config :mibli, token_signing_secret: "7MYATQN5y3dgtNmvWSNyj4RvbE1FA46+"
 config :ash, disable_async?: true
 
 # Configure your database

@@ -17,7 +17,8 @@ defmodule Mibli.Application do
       # Start a worker by calling: Mibli.Worker.start_link(arg)
       # {Mibli.Worker, arg},
       # Start to serve requests, typically the last entry
-      MibliWeb.Endpoint
+      MibliWeb.Endpoint,
+      {AshAuthentication.Supervisor, [otp_app: :mibli]}
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

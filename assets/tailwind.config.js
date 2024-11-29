@@ -9,7 +9,8 @@ module.exports = {
   content: [
     "./js/**/*.js",
     "../lib/mibli_web.ex",
-    "../lib/mibli_web/**/*.*ex"
+    "../lib/mibli_web/**/*.*ex",
+    "../deps/ash_authentication_phoenix/**/*.*ex"
   ],
   theme: {
     extend: {

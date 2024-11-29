@@ -63,7 +63,7 @@ config :mibli, MibliWeb.Endpoint,
   ]
 
 # Enable dev routes for dashboard and mailbox
-config :mibli, dev_routes: true
+config :mibli, dev_routes: true, token_signing_secret: "yRgMDkPIqQY4qJRvV6/DxLCVVPVTmZGj"
 
 # Do not include metadata nor timestamps in development logs
 config :logger, :console, format: "[$level] $message\n"

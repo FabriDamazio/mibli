@@ -17,6 +17,8 @@ config :spark,
     remove_parens?: true,
     "Ash.Resource": [
       section_order: [
+        :authentication,
+        :tokens,
         :postgres,
         :resource,
         :code_interface,
@@ -39,7 +41,8 @@ config :spark,
 
 config :mibli,
   ecto_repos: [Mibli.Repo],
-  generators: [timestamp_type: :utc_datetime]
+  generators: [timestamp_type: :utc_datetime],
+  ash_domains: [Mibli.Accounts]
 
 # Configures the endpoint
 config :mibli, MibliWeb.Endpoint,
