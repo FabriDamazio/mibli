@@ -42,7 +42,7 @@ config :spark,
 config :mibli,
   ecto_repos: [Mibli.Repo],
   generators: [timestamp_type: :utc_datetime],
-  ash_domains: [Mibli.Accounts]
+  ash_domains: [Mibli.Accounts, Mibli.Library]
 
 # Configures the endpoint
 config :mibli, MibliWeb.Endpoint,
