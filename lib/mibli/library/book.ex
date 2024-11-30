@@ -9,10 +9,10 @@ defmodule Mibli.Library.Book do
   end
 
   actions do
-    defaults [:read]
+    defaults [:read, :destroy]
 
     create :create do
-      accept [:title]
+      accept [:title, :owner_id]
     end
   end
 
@@ -23,5 +23,9 @@ defmodule Mibli.Library.Book do
       allow_nil? false
       public? true
     end
+  end
+
+  relationships do
+    belongs_to :owner, Mibli.Accounts.User
   end
 end
