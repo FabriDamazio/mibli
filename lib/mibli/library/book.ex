@@ -8,11 +8,23 @@ defmodule Mibli.Library.Book do
     repo Mibli.Repo
   end
 
+  code_interface do
+    define :my_books, args: [:user_id]
+  end
+
   actions do
-    defaults [:read, :destroy]
+    defaults [:destroy]
 
     create :create do
       accept [:title, :owner_id]
+    end
+
+    read :my_books do
+      argument :user_id, :uuid do
+        allow_nil? false
+      end
+
+      filter expr(owner_id == ^arg(:user_id))
     end
   end
 
