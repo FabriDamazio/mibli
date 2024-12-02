@@ -18,18 +18,28 @@ defmodule MibliWeb.LibraryLive.Create do
     ~H"""
     <.form for={@form} phx-change="validate" phx-submit="save">
       <.input type="text" label="Title" field={@form[:title]} name="title" />
+      <.button type="submit">Save</.button>
     </.form>
     """
   end
 
   def handle_event("save", params, socket) do
-    IO.inspect(params)
-    {:noreply, socket}
+    params = Map.put(params, :owner_id, socket.assigns[:current_user].id)
+    case AshPhoenix.Form.submit(socket.assigns.form, params: params) do
+      {:ok, book} ->
+        IO.inspect(book)
+        {:noreply,
+          socket
+          |> put_flash(:info, "Book saved!")
+          |> push_navigate(to: ~p"/library")}
+
+      {:error, form} ->
+        {:noreply, assign(socket, form: form)}
+    end
   end
 
   def handle_event("validate", params, socket) do
     form = AshPhoenix.Form.validate(socket.assigns.form, params)
-    IO.inspect(form)
     {:noreply, assign(socket, form: form)}
   end
 end
