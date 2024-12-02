@@ -32,7 +32,8 @@ defmodule MibliWeb.Router do
       #
       # If an authenticated user must *not* be present:
       # on_mount {MibliWeb.LiveUserAuth, :live_no_user}
-      live "/library", LibraryLive
+      live "/library", LibraryLive.Index
+      live "/library/books/add", LibraryLive.Create
     end
   end
 
