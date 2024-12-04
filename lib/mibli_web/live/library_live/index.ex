@@ -13,8 +13,15 @@ defmodule MibliWeb.LibraryLive.Index do
   def render(assigns) do
     ~H"""
     <div class="container mx-auto p-8">
-      <h1 class="text-3xl font-bold mb-6 text-center">Minha Biblioteca</h1>
-
+      <div class="flex justify-between items-center mb-6">
+        <h1 class="text-3xl font-bold">My Library</h1>
+        <.link
+          href={~p"/library/books/add"}
+          class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded transition-colors duration-300"
+        >
+          Add book
+        </.link>
+      </div>
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
         <%= for book <- @books do %>
           <div class="bg-white shadow-lg rounded-lg p-6 hover:shadow-2xl transition-shadow duration-300">
