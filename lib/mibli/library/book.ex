@@ -31,6 +31,17 @@ defmodule Mibli.Library.Book do
       allow_nil? false
       public? true
     end
+
+    attribute :author, :string do
+      allow_nil? true
+      public? true
+    end
+
+    attribute :publication_year, :integer do
+      allow_nil? false
+      public? true
+      constraints min: 0, max: 9999
+    end
   end
 
   relationships do
