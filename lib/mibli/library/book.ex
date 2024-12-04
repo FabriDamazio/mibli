@@ -12,7 +12,7 @@ defmodule Mibli.Library.Book do
     defaults [:destroy]
 
     create :create do
-      accept [:title, :owner_id]
+      accept [:title, :owner_id, :author, :publication_year]
     end
 
     read :all_books do
